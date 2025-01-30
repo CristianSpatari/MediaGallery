@@ -1,12 +1,9 @@
-import { ReactElement } from "react";
-
 export type TMediaType = "image" | "gif" | "video";
 export type TMediaExtension = "jpeg" | "png" | "gif" | "mp4";
 
 export interface Item {
-  id: string;
-  icon: ReactElement;
   label: string;
+  onClick: any;
   selected?: boolean;
   count?: number;
   isCheckbox?: boolean;
@@ -21,4 +18,15 @@ export interface MediaItem {
   type: TMediaType;
   extension: TMediaExtension;
   alt?: string;
+}
+
+export interface FolderItem {
+  id: string;
+  label: string;
+  mediaId: string[];
+}
+
+export interface Folder {
+  media: FolderItem[];
+  selected: string;
 }

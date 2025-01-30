@@ -1,8 +1,4 @@
-{
-  "folders": [
-    {
-      "folder_name": "Masini",
-      "media" : [
+ [
         {
           "id": "18",
           "extension" : "img",
@@ -12,7 +8,17 @@
           "height": 1667,
           "url": "https://unsplash.com/photos/Ven2CV8IJ5A"
         }
-      ]
+ ]
+
+{
+  "folders": [
+    {
+      "folder_name": "Masini",
+      "mediaId" : ["1"]
+    },
+    {
+      "folder_name": "Masini",
+      "mediaId" : ["3", "2"]
     }
   ]
 }

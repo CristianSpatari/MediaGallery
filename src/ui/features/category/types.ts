@@ -1,6 +1,6 @@
-import { Item } from "../../utils/types";
+import { FolderItem } from "../../utils/types";
 
 export interface Props {
   label: string;
-  items: Item[];
+  items: FolderItem[];
 }

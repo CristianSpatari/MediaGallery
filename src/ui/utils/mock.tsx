@@ -1,8 +1,4 @@
-import { Item, MediaItem } from "./types";
-import { BsFolder2Open } from "react-icons/bs";
-import { PiImageSquareThin } from "react-icons/pi";
-import { VscPlay } from "react-icons/vsc";
-import { PiGif } from "react-icons/pi";
+import { FolderItem, MediaItem } from "./types";
 
 export const mockMediaData: MediaItem[] = [
   {
@@ -105,25 +101,43 @@ export const mockMediaData: MediaItem[] = [
     extension: "gif",
   },
 ];
-export const folderItems: Item[] = [
+export const mockFolderData: FolderItem[] = [
   {
     id: "1",
-    icon: <BsFolder2Open />,
     label: "Your folder",
-    count: 4,
-    selected: true,
+    mediaId: ["1", "2", "3"],
   },
-  { id: "2", icon: <BsFolder2Open />, label: "Your folder" },
+  {
+    id: "2",
+    label: "My folder",
+    mediaId: ["4", "5", "6", "7"],
+  },
+  {
+    id: "3",
+    label: "Our folder",
+    mediaId: [],
+  },
 ];
 
-export const filterItems: Item[] = [
-  {
-    id: "1",
-    icon: <PiImageSquareThin />,
-    label: "Images",
-    count: 4,
-    isCheckbox: true,
-  },
-  { id: "2", icon: <VscPlay />, isCheckbox: true, label: "Videos" },
-  { id: "3", icon: <PiGif />, isCheckbox: true, label: "Gifs" },
-];
+// export const folderItems: Item[] = [
+//   {
+//     id: "1",
+//     icon: <BsFolder2Open />,
+//     label: "Your folder",
+//     count: 4,
+//     selected: true,
+//   },
+//   { id: "2", icon: <BsFolder2Open />, label: "Your folder" },
+// ];
+
+// export const filterItems: Item[] = [
+//   {
+//     id: "1",
+//     icon: <PiImageSquareThin />,
+//     label: "Images",
+//     count: 4,
+//     isCheckbox: true,
+//   },
+//   { id: "2", icon: <VscPlay />, isCheckbox: true, label: "Videos" },
+//   { id: "3", icon: <PiGif />, isCheckbox: true, label: "Gifs" },
+// ];
