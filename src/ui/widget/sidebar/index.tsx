@@ -1,0 +1,15 @@
+import { Container } from "@radix-ui/themes";
+import { ReactElement } from "react";
+import { Logo } from "../../entities";
+import { Category } from "../../features";
+import { filterItems, folderItems } from "../../utils/mock";
+
+export const Sidebar = (): ReactElement => {
+  return (
+    <Container className="flex-1 w-full p-4">
+      <Logo />
+      <Category label="Folders" items={folderItems} />
+      <Category label="Filters" items={filterItems} />
+    </Container>
+  );
+};
