@@ -1,30 +1,25 @@
 import { selector } from "recoil";
 import { folderStateAtom } from "../atoms/folder";
 import { mediaStateAtom } from "../atoms/media";
+import { filterStateAtom } from "../atoms/filter";
 
 export const selectorFolderWithMedia = selector({
   key: "selectorFolderWithMedia",
   get: ({ get }) => {
     const folderState = get(folderStateAtom);
-    const selectedFolderId = folderState.selectedId;
-    const folders = folderState.media;
     const mediaList = get(mediaStateAtom);
+    const filterState = get(filterStateAtom);
 
-    const selectedFolder = folders.find(
-      (folder) => folder.id === selectedFolderId,
+    const selectedFolder = folderState.media.find(
+      (folder) => folder.id === folderState.selectedId,
     );
 
-    if (selectedFolder) {
-      const mediaInFolder = selectedFolder.mediaId.map((mediaId) =>
-        mediaList.find((media) => media.id === mediaId),
-      );
+    if (!selectedFolder) return null;
 
-      return {
-        ...selectedFolder,
-        media: mediaInFolder.filter((media) => media !== undefined),
-      };
-    }
+    const filteredMedia = selectedFolder.mediaId
+      .map((id) => mediaList.find((media) => media.id === id))
+      .filter((media) => media !== undefined && filterState[media.type]);
 
-    return null;
+    return { ...selectedFolder, media: filteredMedia };
   },
 });

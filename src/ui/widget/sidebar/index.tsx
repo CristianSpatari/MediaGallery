@@ -6,13 +6,21 @@ import { useRecoilValue } from "recoil";
 import { folderStateAtom } from "../../../store";
 import { mockFilterData } from "../../utils/mock";
 
-export const Sidebar = (): ReactElement => {
+export const Sidebar = ({
+  isDataFetched,
+}: {
+  isDataFetched: boolean;
+}): ReactElement => {
   const { media } = useRecoilValue(folderStateAtom);
   return (
     <Container className="flex-1 w-full p-4">
       <Logo />
-      <Category label="Folders" items={media} />
-      <Category label="Filters" items={mockFilterData} />
+      {isDataFetched ? (
+        <div className="mt-[32px]">
+          <Category label="Folders" items={media} />
+          <Category label="Filters" items={mockFilterData} />
+        </div>
+      ) : null}
     </Container>
   );
 };

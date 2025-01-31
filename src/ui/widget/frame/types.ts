@@ -6,3 +6,7 @@ export interface HeaderProps {
   onFolderId: (id: string) => void;
   onClick: VoidFunction;
 }
+
+export interface FrameProps {
+  onDataFetched: (fetched: boolean) => void;
+}

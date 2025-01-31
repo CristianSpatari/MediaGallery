@@ -35,3 +35,9 @@ export interface Folder {
   media: FolderItem[];
   selectedId: string;
 }
+
+export interface Filter {
+  image: boolean;
+  gif: boolean;
+  video: boolean;
+}

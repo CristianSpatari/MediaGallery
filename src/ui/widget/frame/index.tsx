@@ -23,8 +23,9 @@ import {
   mediaStateAtom,
   selectorFolderWithMedia,
 } from "../../../store";
+import { FrameProps } from "./types";
 
-export const Frame = (): ReactElement => {
+export const Frame = ({ onDataFetched }: FrameProps): ReactElement => {
   const selectedFolderID = getLocalStorage(ELocalStorageKey.SELECTED_FOLDER);
   const [selectedMedia, setSelectedMedia] = useState<string[]>([]);
   const [, setMedia] = useRecoilState<MediaItem[]>(mediaStateAtom);
@@ -55,6 +56,7 @@ export const Frame = (): ReactElement => {
         await addData("folder", folderItem);
       }
 
+      onDataFetched(true);
       console.log("Data successfully added to IndexedDB");
     } catch (error) {
       console.error("Error fetching and adding data:", error);
@@ -77,6 +79,7 @@ export const Frame = (): ReactElement => {
           selectedId: getLocalStorage(ELocalStorageKey.SELECTED_FOLDER),
           media: dbFolder,
         });
+        onDataFetched(true);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -161,9 +164,7 @@ export const Frame = (): ReactElement => {
         selectedValue={selectedMedia.length}
         onFolderId={handleFolderId}
         onClick={() => {
-          if (isSelected) {
-            setSelectedMedia([]);
-          }
+          isSelected && setSelectedMedia([]);
         }}
       />
       <div className="w-full h-[1px] bg-gray-100 my-2" />

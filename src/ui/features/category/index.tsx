@@ -9,17 +9,16 @@ import {
   setLocalStorage,
 } from "../../utils/localStorageUtils";
 import { ELocalStorageKey } from "../../utils/enum";
-import { folderStateAtom } from "../../../store";
+import { filterStateAtom, folderStateAtom } from "../../../store";
 import { determineMediaCount } from "./determineMediaCount";
+import { Collapse } from "./Collapse";
 
 export const Category = ({ label, items }: Props): ReactElement => {
   const [folder, setFolder] = useRecoilState<Folder>(folderStateAtom);
-  const [filter, setFilter] = useState({
-    image: true,
-    gif: true,
-    video: true,
-  });
+  const [isFilterOpen, setIsFilterOpen] = useState(true);
+  const [, setFilter] = useRecoilState(filterStateAtom);
   const { selectedId } = folder;
+  let _type;
 
   useEffect(() => {
     if (!selectedId) {
@@ -46,31 +45,38 @@ export const Category = ({ label, items }: Props): ReactElement => {
     }));
   }, []);
 
+  const itemList = items.map(({ id, mediaId, label, type, isChecked }) => {
+    _type = type;
+    const count =
+      type === "folder" ? mediaId?.length : determineMediaCount(type);
+
+    return (
+      <Item
+        key={id}
+        type={type}
+        label={label}
+        count={count}
+        selected={selectedId === id}
+        isCheckbox={isChecked}
+        onClick={() =>
+          type === "folder" ? handleFolderSelect(id) : handleFilterSelect(type)
+        }
+      />
+    );
+  });
+
   return (
-    <div className="mt-[32px]">
-      <div className="mb-4 ml-1">
+    <div className="mb-[20px]">
+      <div className="mb-4 ml-3">
         <Text>{label}</Text>
       </div>
-      {items.map(({ id, mediaId, label, type, isChecked }) => {
-        const count =
-          type === "folder" ? mediaId?.length : determineMediaCount(type);
-
-        return (
-          <Item
-            key={id}
-            type={type}
-            label={label}
-            count={count}
-            selected={selectedId === id}
-            isCheckbox={isChecked}
-            onClick={() =>
-              type === "folder"
-                ? handleFolderSelect(id)
-                : handleFilterSelect(type)
-            }
-          />
-        );
-      })}
+      {_type !== "folder" && (
+        <Collapse
+          onClick={() => setIsFilterOpen(!isFilterOpen)}
+          isFilterOpen={isFilterOpen}
+        />
+      )}
+      {isFilterOpen && itemList}
     </div>
   );
 };

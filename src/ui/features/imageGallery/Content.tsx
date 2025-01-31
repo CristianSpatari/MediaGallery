@@ -1,8 +1,8 @@
 import { Media } from "./Media";
 import { ResizeMedia } from "./ResizeMedia";
 import { CheckBoxNumber } from "./CheckBoxNumber";
-import { useState } from "react";
-import { Text } from "../../shared";
+import { useState, useEffect } from "react";
+import { EditableText } from "../../entities";
 
 const itemsPerPage = 10;
 
@@ -21,6 +21,12 @@ export const Content = ({ images, selectedMedia, onToggle }: any) => {
       setCurrentPage(page);
     }
   };
+
+  useEffect(() => {
+    if (currentImages.length === 0 && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  }, [currentImages, currentPage]);
 
   return (
     <div>
@@ -44,7 +50,12 @@ export const Content = ({ images, selectedMedia, onToggle }: any) => {
                 <CheckBoxNumber isChecked={isSelected} index={index} />
               </div>
               <div className="mt-1 text-center">
-                <Text className="text-xs">{`${label}.${extension}`}</Text>
+                <EditableText
+                  mediaId={id}
+                  className="text-xs"
+                  label={label}
+                  extension={extension}
+                />
               </div>
             </div>
           );

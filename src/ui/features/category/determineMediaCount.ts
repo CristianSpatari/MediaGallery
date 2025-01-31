@@ -1,6 +1,6 @@
 import { TImageType } from "../../utils/types";
-import { mediaTypeCountSelector } from "../../../store/selectors/selectorMediaTypeCount";
 import { useRecoilValue } from "recoil";
+import { mediaTypeCountSelector } from "../../../store";
 
 export const determineMediaCount = (type: TImageType) => {
   const mediaCounts = useRecoilValue(mediaTypeCountSelector);

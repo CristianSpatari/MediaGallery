@@ -146,6 +146,47 @@ export async function removeMediaFromFolder(
   }
 }
 
+export async function updateLabelInStore(
+  storeName: TDBType,
+  id: string,
+  newLabel: string,
+): Promise<void> {
+  try {
+    const db = await openDB();
+    const tx = db.transaction(storeName, "readwrite");
+    const store = tx.objectStore(storeName);
+
+    const request = store.get(id);
+
+    request.onsuccess = async () => {
+      const item = request.result;
+      if (!item) {
+        console.error(`Item with ID ${id} not found in ${storeName}.`);
+        return;
+      }
+
+      item.label = newLabel;
+
+      const updateRequest = store.put(item);
+      updateRequest.onsuccess = () => {
+        console.log(`Updated ${storeName} with new label for ID ${id}:`, item);
+      };
+
+      updateRequest.onerror = () => {
+        console.error(`Error updating label in ${storeName} for ID ${id}`);
+      };
+
+      await tx.done;
+    };
+
+    request.onerror = () => {
+      console.error(`Error retrieving item with ID ${id} from ${storeName}`);
+    };
+  } catch (error) {
+    console.error(`Error updating label in ${storeName}:`, error);
+  }
+}
+
 export async function deleteData(
   storeName: TDBType,
   id: string,

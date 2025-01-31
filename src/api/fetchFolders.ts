@@ -5,6 +5,6 @@ export const fetchFolders = (): Promise<Folder[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mockFolderData);
-    }, 1000);
+    }, 0);
   });
 };
