@@ -100,44 +100,103 @@ export const mockMediaData: MediaItem[] = [
     type: "gif",
     extension: "gif",
   },
+  {
+    id: "12",
+    src: "https://images.unsplash.com/photo-1738162698248-94acbdca27d1?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    label: "You",
+    width: 1500,
+    height: 900,
+    type: "image",
+    extension: "jpeg",
+  },
+  {
+    id: "13",
+    src: "https://plus.unsplash.com/premium_photo-1738091397333-48f0e514b467?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    label: "Icecream",
+    width: 1500,
+    height: 900,
+    type: "image",
+    extension: "jpeg",
+  },
+  {
+    id: "14",
+    src: "https://images.unsplash.com/photo-1738162571972-d8337de941e7?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    label: "Door",
+    width: 1500,
+    height: 900,
+    type: "image",
+    extension: "jpeg",
+  },
+  {
+    id: "15",
+    src: "https://images.unsplash.com/photo-1711650739894-9649908d070f?q=80&w=3136&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    label: "Lock Bike",
+    width: 1500,
+    height: 900,
+    type: "image",
+    extension: "jpeg",
+  },
+  {
+    id: "16",
+    src: "https://images.unsplash.com/photo-1581343500173-310428832b9d?q=80&w=3129&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    label: "Posten",
+    width: 1500,
+    height: 900,
+    type: "image",
+    extension: "jpeg",
+  },
 ];
 export const mockFolderData: FolderItem[] = [
   {
     id: "1",
+    type: "folder",
     label: "Your folder",
     mediaId: ["1", "2", "3"],
   },
   {
     id: "2",
+    type: "folder",
     label: "My folder",
-    mediaId: ["4", "5", "6", "7"],
+    mediaId: [
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+    ],
   },
   {
     id: "3",
+    type: "folder",
     label: "Our folder",
     mediaId: [],
   },
 ];
-
-// export const folderItems: Item[] = [
-//   {
-//     id: "1",
-//     icon: <BsFolder2Open />,
-//     label: "Your folder",
-//     count: 4,
-//     selected: true,
-//   },
-//   { id: "2", icon: <BsFolder2Open />, label: "Your folder" },
-// ];
-
-// export const filterItems: Item[] = [
-//   {
-//     id: "1",
-//     icon: <PiImageSquareThin />,
-//     label: "Images",
-//     count: 4,
-//     isCheckbox: true,
-//   },
-//   { id: "2", icon: <VscPlay />, isCheckbox: true, label: "Videos" },
-//   { id: "3", icon: <PiGif />, isCheckbox: true, label: "Gifs" },
-// ];
+export const mockFilterData: FolderItem[] = [
+  {
+    id: "1",
+    type: "image",
+    label: "Images",
+    isChecked: true,
+  },
+  {
+    id: "2",
+    type: "video",
+    label: "Video",
+    isChecked: true,
+  },
+  {
+    id: "3",
+    type: "gif",
+    label: "GIFs",
+    isChecked: true,
+  },
+];

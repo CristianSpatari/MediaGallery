@@ -1,10 +1,13 @@
 export type TMediaType = "image" | "gif" | "video";
 export type TMediaExtension = "jpeg" | "png" | "gif" | "mp4";
+export type TDBType = "media" | "folder";
+export type TImageType = "folder" | TMediaType;
 
 export interface Item {
   label: string;
   onClick: any;
   selected?: boolean;
+  type: TImageType;
   count?: number;
   isCheckbox?: boolean;
 }
@@ -23,10 +26,12 @@ export interface MediaItem {
 export interface FolderItem {
   id: string;
   label: string;
-  mediaId: string[];
+  type: TImageType;
+  isChecked?: boolean;
+  mediaId?: string[];
 }
 
 export interface Folder {
   media: FolderItem[];
-  selected: string;
+  selectedId: string;
 }

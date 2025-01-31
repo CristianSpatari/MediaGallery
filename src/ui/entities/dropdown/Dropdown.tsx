@@ -5,7 +5,12 @@ import { BsFolder2Open } from "react-icons/bs";
 import { Text } from "../../shared";
 import { Props } from "./types";
 
-export const Dropdown = ({ items, label, selected }: Props): ReactElement => {
+export const Dropdown = ({
+  items,
+  label,
+  selectedId,
+  onFolderId,
+}: Props): ReactElement => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -19,9 +24,9 @@ export const Dropdown = ({ items, label, selected }: Props): ReactElement => {
         className="bg-white shadow-md rounded p-2 z-[100]"
         style={{ width: "var(--radix-dropdown-menu-trigger-width)" }}
       >
-        {items.map((el) => {
+        {items?.map((el) => {
           const { label, id } = el;
-          const isSelected = id === selected;
+          const isSelected = id === selectedId;
           const styleItemBackground = isSelected
             ? "bg-gray-100"
             : "hover:bg-blue-200";
@@ -30,7 +35,7 @@ export const Dropdown = ({ items, label, selected }: Props): ReactElement => {
             <DropdownMenu.Item
               key={id}
               className={`p-2 cursor-pointer ${styleItemBackground}`}
-              onSelect={() => alert(`Action ${id} executed`)}
+              onSelect={() => onFolderId(id)}
             >
               {label}
             </DropdownMenu.Item>

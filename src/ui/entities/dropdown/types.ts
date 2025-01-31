@@ -8,5 +8,6 @@ interface Item extends Common {
 
 export interface Props extends Common {
   items: Item[];
-  selected: string;
+  selectedId: string;
+  onFolderId: (id: string) => void;
 }

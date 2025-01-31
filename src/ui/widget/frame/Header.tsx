@@ -2,7 +2,7 @@ import { Dropdown } from "../../entities/dropdown/Dropdown";
 import { HeaderProps as Props } from "./types";
 import { Checkbox } from "../../shared";
 import { useRecoilValue } from "recoil";
-import { folderStateAtom } from "../../../store/atoms/folder";
+import { folderStateAtom } from "../../../store";
 
 export const Header = ({
   disabled,
@@ -10,9 +10,10 @@ export const Header = ({
   selectedValue,
   isSelected,
   onClick,
+  onFolderId,
 }: Props) => {
-  const { media, selected } = useRecoilValue(folderStateAtom);
-  const selectedFolder = media.find((folder) => folder.id === selected);
+  const { media, selectedId } = useRecoilValue(folderStateAtom);
+  const selectedFolder = media?.find((folder) => folder.id === selectedId);
 
   return (
     <div className="flex items-center gap-2 h-[40px]">
@@ -30,8 +31,9 @@ export const Header = ({
       {isSelected && (
         <Dropdown
           items={media}
-          selected={selected}
-          label={selectedFolder.label}
+          selectedId={selectedId}
+          label={selectedFolder?.label}
+          onFolderId={onFolderId}
         />
       )}
     </div>

@@ -3,3 +3,7 @@ export enum EMediaType {
   VIDEO = "video",
   IMAGE = "image",
 }
+
+export enum ELocalStorageKey {
+  SELECTED_FOLDER = "selectedFolderId",
+}
