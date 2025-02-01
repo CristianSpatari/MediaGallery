@@ -8,5 +8,6 @@ export interface HeaderProps {
 }
 
 export interface FrameProps {
+  clearSelectedMedia: boolean;
   onDataFetched: (fetched: boolean) => void;
 }

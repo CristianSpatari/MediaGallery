@@ -1,14 +1,11 @@
-import { Media } from "./Media";
-import { ResizeMedia } from "./ResizeMedia";
-import { CheckBoxNumber } from "./CheckBoxNumber";
 import { useState, useEffect } from "react";
-import { EditableText } from "../../entities";
+import { Image } from "./Image";
+import { Navigation } from "./Navigation";
 
 const itemsPerPage = 10;
 
 export const Content = ({ images, selectedMedia, onToggle }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const buttonStyle = "px-2 py-2 bg-gray-300 rounded-lg cursor-pointer";
 
   const totalPages = Math.ceil(images.length / itemsPerPage);
 
@@ -29,65 +26,22 @@ export const Content = ({ images, selectedMedia, onToggle }: any) => {
   }, [currentImages, currentPage]);
 
   return (
-    <div>
+    <>
       <div className="grid grid-cols-6 gap-4 pt-4">
-        {currentImages.map((image) => {
-          const { id, src, alt, type, label, extension } = image;
-          const isSelected = selectedMedia.includes(id);
-          const index = selectedMedia.indexOf(id);
-          const styleBorder = isSelected ? "border-blue-500" : "border-white";
-
-          return (
-            <div key={id} className="flex flex-col">
-              <div
-                className={`relative cursor-pointer overflow-hidden rounded-lg group border-2 ${
-                  styleBorder
-                } outline outline-4 outline-transparent hover:outline-gray-100`}
-                onClick={() => onToggle(id)}
-              >
-                <Media alt={alt || "No media found"} src={src} type={type} />
-                <ResizeMedia id={id} />
-                <CheckBoxNumber isChecked={isSelected} index={index} />
-              </div>
-              <div className="mt-1 text-center">
-                <EditableText
-                  mediaId={id}
-                  className="text-xs"
-                  label={label}
-                  extension={extension}
-                />
-              </div>
-            </div>
-          );
-        })}
+        {currentImages.map((image) => (
+          <Image
+            key={image.id}
+            image={image}
+            onToggle={onToggle}
+            selectedMedia={selectedMedia}
+          />
+        ))}
       </div>
-
-      {/* //TODO: Add to new component */}
-      <div className="flex justify-center items-center mt-4">
-        {currentPage !== 1 && (
-          <button
-            className={buttonStyle}
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-        )}
-
-        <span className="mx-2">
-          Page {currentPage} of {totalPages}
-        </span>
-
-        {totalPages > 1 && currentPage !== totalPages && (
-          <button
-            className={buttonStyle}
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        )}
-      </div>
-    </div>
+      <Navigation
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onHandlePageChange={handlePageChange}
+      />
+    </>
   );
 };

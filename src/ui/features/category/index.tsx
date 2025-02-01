@@ -53,6 +53,7 @@ export const Category = ({ label, items }: Props): ReactElement => {
     return (
       <Item
         key={id}
+        id={id}
         type={type}
         label={label}
         count={count}

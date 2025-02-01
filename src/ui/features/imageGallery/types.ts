@@ -23,3 +23,9 @@ export interface CheckBoxNumberProps {
   isChecked: boolean;
   index: number | null;
 }
+
+export interface NavigationProps {
+  currentPage: number;
+  totalPages: number;
+  onHandlePageChange: (newPage: number) => void;
+}

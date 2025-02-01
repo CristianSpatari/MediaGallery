@@ -11,12 +11,7 @@ import {
   setLocalStorage,
 } from "../../utils/localStorageUtils";
 import { ELocalStorageKey } from "../../utils/enum";
-import {
-  addData,
-  addMediaToFolder,
-  getAllData,
-  removeMediaFromFolder,
-} from "../../../db/indexDB";
+import { addData, getAllData } from "../../../db/indexDB";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   folderStateAtom,
@@ -24,13 +19,18 @@ import {
   selectorFolderWithMedia,
 } from "../../../store";
 import { FrameProps } from "./types";
+import { useMoveMedia } from "../../hooks/moveMediaHook";
 
-export const Frame = ({ onDataFetched }: FrameProps): ReactElement => {
+export const Frame = ({
+  onDataFetched,
+  clearSelectedMedia,
+}: FrameProps): ReactElement => {
   const selectedFolderID = getLocalStorage(ELocalStorageKey.SELECTED_FOLDER);
   const [selectedMedia, setSelectedMedia] = useState<string[]>([]);
   const [, setMedia] = useRecoilState<MediaItem[]>(mediaStateAtom);
   const [folder, setFolder] = useRecoilState<MediaItem[]>(folderStateAtom);
   const selectedFolder = useRecoilValue(selectorFolderWithMedia);
+  const moveMedia = useMoveMedia();
 
   const fillData = async () => {
     try {
@@ -46,7 +46,7 @@ export const Frame = ({ onDataFetched }: FrameProps): ReactElement => {
         media: convertedFolder,
       }));
 
-      setLocalStorage(ELocalStorageKey.SELECTED_FOLDER, "1");
+      setLocalStorage(ELocalStorageKey.SELECTED_FOLDER, "200");
 
       for (const mediaItem of convertedMedia) {
         await addData("media", mediaItem);
@@ -94,7 +94,7 @@ export const Frame = ({ onDataFetched }: FrameProps): ReactElement => {
     if (isSelected) {
       setSelectedMedia([]);
     }
-  }, [folder.selectedId]);
+  }, [selectedFolderID, folder.selectedId, clearSelectedMedia]);
 
   const handleToggle = useCallback((id: string) => {
     setSelectedMedia((prev) =>
@@ -105,54 +105,9 @@ export const Frame = ({ onDataFetched }: FrameProps): ReactElement => {
   const handleFolderId = useCallback(
     async (id: string) => {
       setSelectedMedia([]);
-      await removeMediaFromFolder(selectedFolderID, selectedMedia);
-      await addMediaToFolder(id, selectedMedia);
-
-      setFolder((prevState) => {
-        if (!prevState || !prevState.media) return prevState;
-
-        const updatedMedia = prevState.media.map((folder) => {
-          if (folder.id === id) {
-            const newMediaIds = selectedMedia.filter(
-              (mediaId) => !folder.mediaId.includes(mediaId),
-            );
-            if (newMediaIds.length > 0) {
-              return {
-                ...folder,
-                mediaId: [...folder.mediaId, ...newMediaIds],
-              };
-            }
-            return folder;
-          }
-
-          if (folder.id === selectedFolderID) {
-            return {
-              ...folder,
-              mediaId: folder.mediaId.filter(
-                (mediaId) => !selectedMedia.includes(mediaId),
-              ),
-            };
-          }
-
-          return folder;
-        });
-
-        const isMediaChanged = updatedMedia.some((folder, index) => {
-          const originalFolder = prevState.media[index];
-          return folder.mediaId.length !== originalFolder.mediaId.length;
-        });
-
-        if (isMediaChanged) {
-          return {
-            ...prevState,
-            media: updatedMedia,
-          };
-        }
-
-        return prevState;
-      });
+      await moveMedia(selectedMedia, id);
     },
-    [selectedFolderID, selectedMedia, selectedFolder],
+    [selectedFolderID, selectedMedia],
   );
 
   return (

@@ -5,6 +5,7 @@ export type TImageType = "folder" | TMediaType;
 
 export interface Item {
   label: string;
+  id: string;
   onClick: any;
   selected?: boolean;
   type: TImageType;

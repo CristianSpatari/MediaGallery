@@ -148,13 +148,13 @@ export const mockMediaData: MediaItem[] = [
 ];
 export const mockFolderData: FolderItem[] = [
   {
-    id: "1",
+    id: "200",
     type: "folder",
     label: "Your folder",
     mediaId: ["1", "2", "3"],
   },
   {
-    id: "2",
+    id: "201",
     type: "folder",
     label: "My folder",
     mediaId: [
@@ -174,7 +174,7 @@ export const mockFolderData: FolderItem[] = [
     ],
   },
   {
-    id: "3",
+    id: "202",
     type: "folder",
     label: "Our folder",
     mediaId: [],
@@ -182,19 +182,19 @@ export const mockFolderData: FolderItem[] = [
 ];
 export const mockFilterData: FolderItem[] = [
   {
-    id: "1",
+    id: "100",
     type: "image",
     label: "Images",
     isChecked: true,
   },
   {
-    id: "2",
+    id: "101",
     type: "video",
     label: "Video",
     isChecked: true,
   },
   {
-    id: "3",
+    id: "102",
     type: "gif",
     label: "GIFs",
     isChecked: true,
