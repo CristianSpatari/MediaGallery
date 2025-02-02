@@ -8,12 +8,17 @@ export const Collapse = ({ onClick, isFilterOpen }: CollapseProps) => {
   const [filter, setFilter] = useRecoilState(filterStateAtom);
 
   const handleCheckboxClick = () => {
-    const newState = {
-      image: !Object.values(filter).includes(true),
-      gif: !Object.values(filter).includes(true),
-      video: !Object.values(filter).includes(true),
-    };
-    setFilter(newState);
+    const { mediaType, ...restFilters } = filter;
+    const isMediaTypeDisabled = !mediaType;
+    const isAnyFilterEnabled = Object.values(restFilters).some(Boolean);
+
+    setFilter({
+      ...filter,
+      ...(isMediaTypeDisabled && !isAnyFilterEnabled
+        ? { image: true, gif: true, video: true }
+        : {}),
+      mediaType: isMediaTypeDisabled,
+    });
   };
 
   return (
@@ -29,7 +34,7 @@ export const Collapse = ({ onClick, isFilterOpen }: CollapseProps) => {
           <MdKeyboardArrowDown size={15} className="ml-2" />
         )}
       </div>
-      <Checkbox defaultChecked onClick={handleCheckboxClick} />
+      <Checkbox checked={filter.mediaType} onClick={handleCheckboxClick} />
     </div>
   );
 };

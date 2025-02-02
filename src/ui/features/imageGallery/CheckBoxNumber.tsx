@@ -14,10 +14,10 @@ export const CheckBoxNumber = ({
 
   return (
     <div
-      className={`absolute bottom-0 left-0 pointer-events-none transition-opacity duration-300 ${opacityClass}`}
+      className={`absolute bottom-0 left-0 transition-opacity duration-300 ${opacityClass}`}
     >
       <label
-        className={`flex cursor-pointer items-center justify-center w-7 h-7 ${backgroundColor} border-2 ${borderColor} rounded-md shadow-md`}
+        className={`flex cursor-pointer pointer-events-none items-center justify-center w-7 h-7 ${backgroundColor} border-2 ${borderColor} rounded-md shadow-md`}
       >
         <Checkbox className="hidden peer" checked={isChecked} />
         {isChecked && index !== null ? (

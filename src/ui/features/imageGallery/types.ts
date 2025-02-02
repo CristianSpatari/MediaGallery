@@ -4,9 +4,18 @@ export interface OverlayProps {
   type: TMediaType;
 }
 
-export interface ImageGalleryProps {
+interface ImageCommon {
+  selectedMedia: string[];
+  onToggle: (id: string) => void;
+  onDeletedImage: (deleteImage: boolean) => void;
+}
+
+export interface ImageProps extends ImageCommon {
+  image: MediaItem;
+}
+
+export interface ImageGalleryProps extends ImageCommon {
   images: MediaItem[];
-  onToggle: any;
 }
 
 export interface MediaProps {
@@ -15,8 +24,10 @@ export interface MediaProps {
   type: TMediaType;
 }
 
-export interface ResizeMediaProps {
+export interface ActionProps {
   id: string;
+  onDeletedImage?: (deleteImage: boolean) => void;
+  mediaLabel?: string;
 }
 
 export interface CheckBoxNumberProps {

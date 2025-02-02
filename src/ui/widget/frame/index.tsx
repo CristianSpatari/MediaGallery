@@ -124,6 +124,7 @@ export const Frame = ({
       />
       <div className="w-full h-[1px] bg-gray-100 my-2" />
       <ImageGallery
+        onDeletedImage={() => setSelectedMedia([])}
         images={selectedFolder?.media ?? []}
         onToggle={handleToggle}
         selectedMedia={selectedMedia}

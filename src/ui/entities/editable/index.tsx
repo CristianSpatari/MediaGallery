@@ -25,18 +25,21 @@ export const EditableText = ({ label, extension, mediaId }) => {
   };
 
   const updateData = async () => {
+    const newLabel = value.split(".")[0];
+
     setMedia((prevMedia) =>
       prevMedia.map((item) =>
-        item.id === mediaId ? { ...item, label: value.split(".")[0] } : item,
+        item.id === mediaId ? { ...item, label: newLabel } : item,
       ),
     );
 
-    try {
-      await updateLabelInStore("media", mediaId, value.split(".")[0]);
-      console.log("Label updated in IndexedDB successfully.");
-    } catch (error) {
-      console.error("Error updating label in IndexedDB:", error);
-    }
+    updateLabelInStore("media", mediaId, newLabel)
+      .then(() =>
+        console.log(`Label updated successfully for media ID: ${mediaId}`),
+      )
+      .catch((error) =>
+        console.error(`Failed to update label for media ID: ${mediaId}`, error),
+      );
   };
 
   const handleChange = (e) => {

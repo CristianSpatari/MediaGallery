@@ -11,8 +11,31 @@ export const useMoveMedia = () => {
   return async (mediaIds: string[], folderId: string) => {
     if (!mediaIds.length || !folderId || !selectedFolderID) return;
 
-    await removeMediaFromFolder(selectedFolderID, mediaIds);
-    await addMediaToFolder(folderId, mediaIds);
+    removeMediaFromFolder(selectedFolderID, mediaIds)
+      .then(() =>
+        console.log(
+          `Successfully removed media IDs: ${mediaIds} from folder ${selectedFolderID}`,
+        ),
+      )
+      .catch((error) =>
+        console.error(
+          `Failed to remove media IDs: ${mediaIds} from folder ${selectedFolderID}`,
+          error,
+        ),
+      );
+
+    addMediaToFolder(folderId, mediaIds)
+      .then(() =>
+        console.log(
+          `Successfully added media IDs: ${mediaIds} to folder ${folderId}`,
+        ),
+      )
+      .catch((error) =>
+        console.error(
+          `Failed to add media IDs: ${mediaIds} to folder ${folderId}`,
+          error,
+        ),
+      );
 
     setFolder((prevState) => {
       if (!prevState || !prevState.media) return prevState;

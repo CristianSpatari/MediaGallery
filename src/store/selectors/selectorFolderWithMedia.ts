@@ -18,7 +18,12 @@ export const selectorFolderWithMedia = selector({
 
     const filteredMedia = selectedFolder.mediaId
       .map((id) => mediaList.find((media) => media.id === id))
-      .filter((media) => media !== undefined && filterState[media.type]);
+      .filter(
+        (media) =>
+          media !== undefined &&
+          filterState["mediaType"] &&
+          filterState[media.type],
+      );
 
     return { ...selectedFolder, media: filteredMedia };
   },

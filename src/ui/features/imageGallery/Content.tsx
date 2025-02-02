@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { Image } from "./Image";
 import { Navigation } from "./Navigation";
+import { ImageGalleryProps } from "./types";
 
 const itemsPerPage = 10;
 
-export const Content = ({ images, selectedMedia, onToggle }: any) => {
+export const Content = ({
+  images,
+  selectedMedia,
+  onToggle,
+  onDeletedImage,
+}: ImageGalleryProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(images.length / itemsPerPage);
@@ -33,6 +39,7 @@ export const Content = ({ images, selectedMedia, onToggle }: any) => {
             key={image.id}
             image={image}
             onToggle={onToggle}
+            onDeletedImage={onDeletedImage}
             selectedMedia={selectedMedia}
           />
         ))}

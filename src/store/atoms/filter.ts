@@ -7,5 +7,6 @@ export const filterStateAtom = atom<Filter>({
     image: true,
     gif: true,
     video: true,
+    mediaType: true,
   },
 });

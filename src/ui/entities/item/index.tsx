@@ -3,6 +3,8 @@ import { ReactElement, useMemo } from "react";
 import { Item as Props } from "../../utils/types";
 import { determineImage } from "./determineImage";
 import { useDroppable } from "@dnd-kit/core";
+import { useRecoilValue } from "recoil";
+import { filterStateAtom } from "../../../store";
 
 export const Item = ({
   label,
@@ -13,13 +15,15 @@ export const Item = ({
   selected,
   onClick,
 }: Props): ReactElement => {
+  const filter = useRecoilValue(filterStateAtom);
   const { isOver, setNodeRef } = useDroppable({
     id: id,
   });
 
+  const isFolderType = type === "folder";
   const elementImage = useMemo(() => determineImage(type), [type]);
   const styleClass =
-    selected && type === "folder"
+    selected && isFolderType
       ? isOver
         ? "bg-red-100"
         : "bg-gray-100"
@@ -29,9 +33,9 @@ export const Item = ({
 
   return (
     <label
-      ref={type === "folder" ? setNodeRef : null}
+      ref={isFolderType ? setNodeRef : null}
       className={`flex rounded-md h-[32px] px-3 mb-1 cursor-pointer ${styleClass}`}
-      onClick={type === "folder" ? onClick : undefined}
+      onClick={isFolderType ? onClick : undefined}
     >
       <div className="flex flex-1 items-center">
         {elementImage}
@@ -40,7 +44,7 @@ export const Item = ({
       </div>
       {isCheckbox && (
         <Checkbox
-          defaultChecked
+          checked={filter.mediaType && filter[type]}
           onClick={type !== "folder" ? onClick : undefined}
         />
       )}

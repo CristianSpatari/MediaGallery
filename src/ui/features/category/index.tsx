@@ -38,14 +38,24 @@ export const Category = ({ label, items }: Props): ReactElement => {
     [selectedId],
   );
 
-  const handleFilterSelect = useCallback((id: string) => {
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      [id]: !prevFilter[id],
-    }));
-  }, []);
+  const handleFilterSelect = useCallback(
+    (id: string) => {
+      setFilter((prevFilter) => {
+        const updatedFilter = { ...prevFilter, [id]: !prevFilter[id] };
+        const isAnyEnabled = Object.entries(updatedFilter)
+          .filter(([key]: unknown) => key !== "mediaType")
+          .some(([, value]) => value);
 
-  const itemList = items.map(({ id, mediaId, label, type, isChecked }) => {
+        return {
+          ...updatedFilter,
+          mediaType: isAnyEnabled,
+        };
+      });
+    },
+    [setFilter],
+  );
+
+  const itemList = items.map(({ id, mediaId, label, type, isCheckbox }) => {
     _type = type;
     const count =
       type === "folder" ? mediaId?.length : determineMediaCount(type);
@@ -58,7 +68,7 @@ export const Category = ({ label, items }: Props): ReactElement => {
         label={label}
         count={count}
         selected={selectedId === id}
-        isCheckbox={isChecked}
+        isCheckbox={isCheckbox}
         onClick={() =>
           type === "folder" ? handleFolderSelect(id) : handleFilterSelect(type)
         }

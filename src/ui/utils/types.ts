@@ -6,7 +6,7 @@ export type TImageType = "folder" | TMediaType;
 export interface Item {
   label: string;
   id: string;
-  onClick: any;
+  onClick: VoidFunction;
   selected?: boolean;
   type: TImageType;
   count?: number;
@@ -28,7 +28,7 @@ export interface FolderItem {
   id: string;
   label: string;
   type: TImageType;
-  isChecked?: boolean;
+  isCheckbox?: boolean;
   mediaId?: string[];
 }
 

@@ -185,18 +185,18 @@ export const mockFilterData: FolderItem[] = [
     id: "100",
     type: "image",
     label: "Images",
-    isChecked: true,
+    isCheckbox: true,
   },
   {
     id: "101",
     type: "video",
     label: "Video",
-    isChecked: true,
+    isCheckbox: true,
   },
   {
     id: "102",
     type: "gif",
     label: "GIFs",
-    isChecked: true,
+    isCheckbox: true,
   },
 ];

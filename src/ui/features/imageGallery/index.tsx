@@ -6,6 +6,7 @@ export const ImageGallery = ({
   images,
   selectedMedia,
   onToggle,
+  onDeletedImage,
 }: ImageGalleryProps) => {
   const imagesCount = images.length;
 
@@ -14,6 +15,7 @@ export const ImageGallery = ({
       images={images}
       selectedMedia={selectedMedia}
       onToggle={onToggle}
+      onDeletedImage={onDeletedImage}
     />
   ) : (
     <NoMedia />

@@ -3,8 +3,15 @@ import { ResizeMedia } from "./ResizeMedia";
 import { CheckBoxNumber } from "./CheckBoxNumber";
 import { useDraggable } from "@dnd-kit/core";
 import { EditableText } from "../../entities";
+import { Trash } from "./Trash";
+import { ImageProps } from "./types";
 
-export const Image = ({ image, selectedMedia, onToggle }) => {
+export const Image = ({
+  image,
+  selectedMedia,
+  onToggle,
+  onDeletedImage,
+}: ImageProps) => {
   const { id, src, alt, type, label, extension } = image;
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: id,
@@ -36,6 +43,12 @@ export const Image = ({ image, selectedMedia, onToggle }) => {
       >
         <Media alt={alt || "No media found"} src={src} type={type} />
         <ResizeMedia id={id} />
+        <Trash
+          id={id}
+          mediaLabel={`${label}.${extension}`}
+          onDeletedImage={onDeletedImage}
+        />
+
         <CheckBoxNumber isChecked={isSelected} index={index} />
       </div>
       <div className="mt-1 text-center">
